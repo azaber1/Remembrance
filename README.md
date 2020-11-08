@@ -1,3 +1,3 @@
 # Remembrance
 
-A simple Chrome extension to send different short reminders every hour
+A simple Chrome extension to send scheduled short reminders
