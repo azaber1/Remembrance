@@ -112,6 +112,18 @@ chrome.runtime.onInstalled.addListener(async () => {
   await scheduleAlarm();
 });
 
+chrome.runtime.onMessage.addListener(async (msg, _sender, sendResponse) => {
+  if (msg?.type === "reschedule") {
+    await scheduleAlarm();
+    sendResponse({ ok: true });
+  } else if (msg?.type === "test") {
+    await showAthkarNotification();
+    sendResponse({ ok: true });
+  }
+  return true; // keep SW alive until async work finishes
+});
+
+
 chrome.runtime.onStartup.addListener(async () => {
   await ensureInitialized();
   await scheduleAlarm();
@@ -132,3 +144,4 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 chrome.notifications.onClicked.addListener((id) => {
   chrome.notifications.clear(id);
 });
+
